@@ -10,6 +10,8 @@ def mavenHome= tool name: 'maven3.6.3'
   echo "Jenkins Home ${env.JENKINS_HOME}"
   echo "Jenkins URL ${env.JENKINS_URL}"
   echo "JOB Name ${env.JOB_NAME}"
+  
+  properties([[$class: 'JiraProjectProperty'], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '3')), pipelineTriggers([pollSCM('* * * * *')])])
 
 stage('CheckoutCode')
 {
@@ -20,7 +22,7 @@ stage('Build')
 {
 sh "${mavenHome}/bin/mvn clean package"
 }
-
+/*
 stage('SonarQubeReortExecution')
 {
 sh "${mavenHome}/bin/mvn sonar:sonar"
@@ -45,5 +47,5 @@ emailext body: '''Build is over.
 Regards,
 Vijayalakshmi.''', subject: 'Build is over', to: 'vijjiabi@gmail.com'
 }
-
+*/
 }
